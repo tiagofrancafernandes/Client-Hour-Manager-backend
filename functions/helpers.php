@@ -327,8 +327,9 @@ if (!function_exists('die_as_json')) {
 
 if (!function_exists('git_latest_log')) {
     /**
-     * function git_latest_log
+     * Get latest git HEAD log entry.
      *
+     * @param string|null $key
      * @return array|string
      */
     function git_latest_log(?string $key = null): array|string
@@ -336,29 +337,57 @@ if (!function_exists('git_latest_log')) {
         $headFile = base_path('.git/HEAD');
         $headLogFile = base_path('.git/logs/HEAD');
 
-        $toReturn = [];
-
         if (!is_file($headLogFile) || !is_readable($headLogFile)) {
-            return is_null($key) ? $toReturn : '';
+            return $key === null ? [] : '';
         }
 
-        $headFirstLine = is_file($headFile) && is_readable($headFile) ? trim(fgets(fopen($headFile, 'r'))) : '';
-        $logFirstLine = fgets(fopen($headLogFile, 'r'));
-        $logFirstLine = trim($logFirstLine ?: '');
-        $toReturn['log_line'] = $logFirstLine;
-        $toReturn['head_line'] = $headFirstLine;
-        $toReturn['head'] = str_replace(['ref: refs/heads/', "\n", "\r"], '', $headFirstLine ?: '');
-        $toReturn['branch'] = $toReturn['head'];
-        $toReturn['commit_id'] = trim(explode(' ', $logFirstLine)[1] ?? '');
-        $toReturn['id'] = $toReturn['commit_id'];
-        $toReturn['latest_commit_id'] = explode(' ', $logFirstLine)[1] ?? '';
-        $toReturn['commit'] = trim(explode('commit:', $logFirstLine)[0] ?? '');
+        $file = new \SplFileObject($headLogFile, 'r');
+        $file->seek(PHP_INT_MAX);
+        $file->seek($file->key() -1 );
+        $file->seek($file->key());
 
-        if (is_null($key)) {
-            return $toReturn;
+        $line = trim($file->current());
+
+        if ($line === '') {
+            return $key === null ? [] : '';
         }
 
-        return $toReturn[$key] ?? '';
+        $pattern = '/^
+            (?<oldHash>[a-f0-9]{40})\s
+            (?<newHash>[a-f0-9]{40})\s
+            (?<author>.+?)\s
+            <(?<email>[^>]+)>\s
+            (?<timestamp>\d+)\s
+            (?<timezone>[+-]\d{4})\t
+            (?<action>[^:]+):\s
+            (?<message>.+)
+        $/x';
+
+        if (!preg_match($pattern, $line, $matches)) {
+            return $key === null ? [] : '';
+        }
+
+        $data = [
+            'old_hash'  => $matches['oldHash'],
+            'new_hash'  => $matches['newHash'],
+            'author'    => $matches['author'],
+            'email'     => $matches['email'],
+            'timestamp' => (int) $matches['timestamp'],
+            'timezone'  => $matches['timezone'],
+            'action'    => $matches['action'],
+            'message'   => $matches['message'],
+        ];
+
+        $headFileContent = is_file($headFile) && is_readable($headFile) ? fgets(fopen($headFile, 'r')) : '';
+        $data['log_line'] = $line;
+        $data['head_line'] = str_replace(['ref: refs/heads/', 'ref: refs/heads', 'ref: ', "\n", "\r"], '', trim($headFileContent ?: ''));
+        $data['branch'] = $data['head_line'];
+
+        if ($key === null) {
+            return $data;
+        }
+
+        return $data[$key] ?? '';
     }
 }
 
