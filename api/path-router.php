@@ -17,7 +17,9 @@ $fallbackController = function(string $_uri, bool $onlyRoutes = false) {
     return is_file($filePath) ? $filePath : __DIR__ . '/404.php';
 };
 
-$filePath = match (trim(ltrim($uri, '/'))) {
+$uri = trim(ltrim($uri, '/'));
+
+$filePath = match ($uri) {
     '', '/', 'home', 'index', 'index.php' => CONTENT_PATH . '/index.php',
     'about', 'about.php' => CONTENT_PATH . '/about.php',
     'contact', 'contact.php' => CONTENT_PATH . '/contact.php',

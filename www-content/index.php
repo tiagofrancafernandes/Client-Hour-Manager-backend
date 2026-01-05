@@ -15,16 +15,9 @@ $fileName = str_replace(
     <title>File: <?= $fileName ?></title>
 </head>
 <body>
+    <?=  file_get_contents(__DIR__.'/_partials/menu.view.php') ?>
     <h3>
         This is the "<?= $fileName ?>" file. Go to <a href="/">home</a>
     </h3>
-
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/page?page=about">Page ?</a></li>
-    </ul>
-    
 </body>
 </html>

@@ -1,10 +1,24 @@
 <?php
 
 $fileName = str_replace(
-    '/var/task/user/',
+    ['/var/task/user/', '/index.php/', '/index.php'],
     '',
     $_SERVER['PHP_SELF'] ?? '',
 );
+$date = date('c');
+
+function renderView(string $template, array $data = []): string
+{
+    extract($data, EXTR_SKIP);
+
+    ob_start();
+    include $template;
+
+    return ob_get_clean();
+}
+
+$content = renderView(__DIR__.'/_partials/menu.view.php', ['date' => $date]);
+
 ?>
 
 <!DOCTYPE html>
@@ -15,16 +29,9 @@ $fileName = str_replace(
     <title>File: <?= $fileName ?></title>
 </head>
 <body>
+    <?= $content . ' content' ?>
     <h3>
-        This is the "<?= $fileName ?>" file. Go to <a href="/">home</a>
+        This is the "<?= $fileName ?>" file/path. Go to <a href="/">home</a>
     </h3>
-
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/page?page=about">Page ?</a></li>
-    </ul>
-    
 </body>
 </html>
