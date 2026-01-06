@@ -1,6 +1,6 @@
 {
     "outputDirectory": "public",
-    "installCommand": "composer install",
+    "installCommand": "php -i || true",
     "buildCommand": "php -v || true",
     "functions": {
         "api/*.php": {
