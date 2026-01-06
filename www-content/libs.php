@@ -30,15 +30,8 @@ $latestLog = git_latest_log();
 
     <?php
 
-    dump([
-        'a' => 1,
-        'b' => 2,
-        'c' => 3,
-        'file_line' => __FILE__ . ':' . __LINE__,
-        'git_latest_log' => git_latest_log(),
-        'Illuminate\Support\Carbon' => (new Illuminate\Support\Carbon())->toDateTimeString(),
-        'now' => now(),
-        'DATABASE_URL' => preg_replace(
+    $envs = request_query_get('envs') ? getenv() : [];
+    $DATABASE_URL = preg_replace(
             [
                 '/(postgresql:)\/\/.+(:).+(@.+)/',
                 '/(postgres:)\/\/.+(:).+(@.+)/',
@@ -47,7 +40,23 @@ $latestLog = git_latest_log();
             ],
             '$1****:****$2$3',
             getenv('DATABASE_URL') ?: 'not set',
-        ),
+        );
+
+    if (isset($envs['DATABASE_URL'])) {
+        $envs['DATABASE_URL'] = $DATABASE_URL;
+    }
+
+    dump([
+        'a' => 1,
+        'b' => 2,
+        'c' => 3,
+        'file_line' => __FILE__ . ':' . __LINE__,
+        'git_latest_log' => git_latest_log(),
+        'Illuminate\Support\Carbon' => (new Illuminate\Support\Carbon())->toDateTimeString(),
+        'now' => now(),
+        'DATABASE_URL' => $DATABASE_URL,
+        'APP_ENV' => getenv('APP_ENV') ?: 'not set',
+        'envs' => $envs,
     ]);
     ?>
 </body>

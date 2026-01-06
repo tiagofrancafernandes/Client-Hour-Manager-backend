@@ -114,9 +114,21 @@ if (!function_exists('request_uri')) {
      *
      * @return mixed
      */
-    function request_uri(string $defaultValue = '/'): string
+    function request_uri(string $defaultValue = '/', bool $withQuery = false): string
     {
-        return $uri = $_SERVER['REQUEST_URI'] ?? $defaultValue;
+        if ($withQuery) {
+            return $_SERVER['REQUEST_URI'] ?? $defaultValue;
+        }
+
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+
+        $url = implode('', [
+            $protocol,
+            $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost',
+            $_SERVER['REQUEST_URI'] ?? '',
+        ]);
+
+        return parse_url($url, PHP_URL_PATH) ?? $defaultValue;
     }
 }
 
