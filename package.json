@@ -2,8 +2,10 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build"
+        "dev": "echo vite",
+        "build": "echo vite build",
+        "vite:dev": "vite",
+        "vite:build": "vite build"
     },
     "devDependencies": {
         "axios": "^1.6.4",
