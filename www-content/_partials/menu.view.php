@@ -8,5 +8,6 @@ $uri ??= request_uri();
     <li><a data-is-active="<?= in_array($uri, ['/git']) ?>" href="/git">Git</a></li>
     <li><a data-is-active="<?= in_array($uri, ['/about']) ?>" href="/about">About</a></li>
     <li><a data-is-active="<?= in_array($uri, ['/libs']) ?>" href="/libs">Libs</a></li>
+    <li><a data-is-active="<?= in_array($uri, ['/db']) ?>" href="/db">db</a></li>
     <li><a data-is-active="<?= in_array($uri, ['/page']) ?>" href="/page?page=about">Page ?</a></li>
 </ul>
