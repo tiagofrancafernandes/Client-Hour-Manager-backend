@@ -25,9 +25,11 @@ if (!headers_sent()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Not Found "<?= $uri ?>"</title>
+    <?=  www_content_view('_partials/head_styles', []) ?>
 </head>
 <body>
-    <h2>Not Found "<?= $uri ?>"</h2>
+    <?=  www_content_view('_partials/menu', []) ?>
+    <h3>Not Found "<?= $uri ?>"</h3>
 
     <h5>Go to <a href="/">home</a></h5>
 </body>

@@ -8,6 +8,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 require_once __DIR__ . '/../vendor/symfony/var-dumper/Resources/functions/dump.php';
 
+require_once __DIR__ . '/../vendor/illuminate/collections/helpers.php';
+
+require_once __DIR__ . '/../vendor/illuminate/collections/functions.php';
+
 require_once __DIR__ . '/cors.php';
 
 require_once __DIR__ . '/cache.php';

@@ -23,10 +23,17 @@ $latestLog = git_latest_log();
         This is the "<?= $fileName ?>" file/path. Go to <a href="/">home</a>
     </h3>
 
-    <h5 class="text-3xl font-bold underline text-orange-600">
-        Hello world!
-    </h5>
+    <?php
 
-    <pre><?= strip_tags(json_encode($latestLog, 64 | 128 | 256 | 512)) ?></pre>
+    dump([
+        'a' => 1,
+        'b' => 2,
+        'c' => 3,
+        'file_line' => __FILE__ . ':' . __LINE__,
+        'git_latest_log' => git_latest_log(),
+        'Illuminate\Support\Carbon' => (new Illuminate\Support\Carbon())->toDateTimeString(),
+        'now' => now(),
+    ]);
+?>
 </body>
 </html>

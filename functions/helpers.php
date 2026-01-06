@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Carbon;
+
 if (!defined('BASE_PATH')) {
     define('BASE_PATH', __DIR__ . '/..');
 }
@@ -186,6 +188,20 @@ if (!function_exists('request_header_get')) {
     }
 }
 
+if (!function_exists('request_expects_json')) {
+    /**
+     * function request_expects_json
+     *
+     * @return bool
+     */
+    function request_expects_json(): bool
+    {
+        $acceptHeader = request_header_get('accept', '');
+
+        return str_contains($acceptHeader, 'application/json');
+    }
+}
+
 if (!function_exists('app_abort')) {
     function app_abort(int $code, string $message = ''): void
     {
@@ -341,9 +357,9 @@ if (!function_exists('git_latest_log')) {
             return $key === null ? [] : '';
         }
 
-        $file = new \SplFileObject($headLogFile, 'r');
+        $file = new SplFileObject($headLogFile, 'r');
         $file->seek(PHP_INT_MAX);
-        $file->seek($file->key() -1 );
+        $file->seek($file->key() - 1);
         $file->seek($file->key());
 
         $line = trim($file->current());
@@ -378,10 +394,10 @@ if (!function_exists('git_latest_log')) {
             'message'   => $matches['message'],
         ];
 
-        $headFileContent = is_file($headFile) && is_readable($headFile) ? fgets(fopen($headFile, 'r')) : '';
+        $headContent = is_file($headFile) && is_readable($headFile) ? fgets(fopen($headFile, 'r')) : '';
         $data['log_line'] = $line;
-        $data['head_line'] = str_replace(['ref: refs/heads/', 'ref: refs/heads', 'ref: ', "\n", "\r"], '', trim($headFileContent ?: ''));
-        $data['branch'] = $data['head_line'];
+        $head = str_replace(['ref: refs/heads/', 'ref: refs/heads', 'ref: ', "\n", "\r"], '', trim($headContent ?: ''));
+        $data['branch'] = $data['head'] = $head;
 
         if ($key === null) {
             return $data;
@@ -404,8 +420,39 @@ if (!function_exists('render_view')) {
         extract($data, EXTR_SKIP);
 
         ob_start();
+
         include $template;
 
         return ob_get_clean() ?: '';
+    }
+}
+
+if (!function_exists('www_content_view')) {
+    /**
+     * Summary of www_content_view
+     *
+     * @param string $path
+     * @param array $data
+     * @return string
+     */
+    function www_content_view(string $path, array $data = []): string
+    {
+        return render_view(base_path("www-content/{$path}.view.php"), $data);
+    }
+}
+
+if (!function_exists('now')) {
+    /**
+     * function now
+     *
+     * @param DateTimeInterface|string|null $date
+     *
+     * @return \Carbon\Carbon|Carbon
+     */
+    function now(DateTimeInterface|string|null $date = null): \Carbon\Carbon|Carbon
+    {
+        $date ??= null;
+
+        return new Carbon($date);
     }
 }

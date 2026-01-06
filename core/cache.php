@@ -2,8 +2,8 @@
 
 header_remove('Content-Security-Policy');
 
-header("Content-Security-Policy: default-src *;");
 // header("Content-Security-Policy: connect-src 'self' *;");
+header("Content-Security-Policy: default-src * data: blob: 'unsafe-inline' 'unsafe-eval' 'self' *;");
 
 $toCacheResponse = to_bool(
     request_header_get('X-To-Cache') ??
@@ -28,7 +28,7 @@ if ($toCacheResponse && !$_publicCache) {
     header("ETag: " . md5_file(__FILE__)); // ETag (optional, good practice)
 }
 
-if (!is_to_cache()) {
+if (request_expects_json() && !is_to_cache()) {
     // Here I send clear cache instructions if it exists
     header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
     header('Cache-Control: post-check=0, pre-check=0', false);
