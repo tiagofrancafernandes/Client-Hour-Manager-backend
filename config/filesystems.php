@@ -1,5 +1,15 @@
 <?php
 
+$pathsToLink = [];
+
+if (env('ON_SERVERLESS')) {
+    $pathsToLink[public_path('storage')] = sys_get_temp_dir() . '/app/public';
+}
+
+if (!env('ON_SERVERLESS')) {
+    $pathsToLink[public_path('storage')] = storage_path('app/public');
+}
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -30,13 +40,21 @@ return [
     'disks' => [
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => env('ON_SERVERLESS') ? sys_get_temp_dir() . '/app' : storage_path('app'),
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => env('ON_SERVERLESS') ? sys_get_temp_dir() . '/app/public' : storage_path('app/public'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'serverless_public' => [
+            'driver' => 'local',
+            'root' => sys_get_temp_dir() . '/app/public',
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
@@ -67,6 +85,6 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        ...$pathsToLink,
     ],
 ];

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
+    'on_serverless' => (bool) env('ON_SERVERLESS', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

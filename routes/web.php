@@ -21,3 +21,5 @@ Route::get('/db-test', fn () => [
     'database_name' => config('database.connections.' . config('database.default') . '.database'),
     'test_conn_pg' => DB::select('SELECT 1 AS result'),
 ]);
+
+Route::get('/libs', fn () => []);
