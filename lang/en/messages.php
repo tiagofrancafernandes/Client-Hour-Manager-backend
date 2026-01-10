@@ -57,6 +57,7 @@ return [
     // Package messages
     'package' => [
         'purchased' => 'Package purchased successfully.',
+        'purchase_initiated' => 'Purchase initiated successfully.',
         'inactive' => 'This package is not available.',
         'purchase_disabled' => 'Purchases are disabled for this wallet.',
     ],

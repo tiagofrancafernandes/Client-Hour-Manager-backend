@@ -188,6 +188,15 @@ return [
         'occurred_at_invalid' => 'A data de ocorrência deve ser uma data válida.',
     ],
 
+    'package' => [
+        'wallet_required' => 'A carteira é obrigatória.',
+        'wallet_not_found' => 'Carteira não encontrada.',
+        'package_required' => 'O pacote é obrigatório.',
+        'package_not_found' => 'Pacote não encontrado.',
+        'message_max' => 'A mensagem não pode exceder 1000 caracteres.',
+        'belongs_to_wallet' => 'O pacote selecionado não pertence a esta carteira.',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

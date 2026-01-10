@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\PackagePurchaseController;
 use App\Http\Controllers\Api\V1\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,12 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
         ->name('api.v1.transactions.credit');
     Route::post('/transactions/debit', [TransactionController::class, 'addDebit'])
         ->name('api.v1.transactions.debit');
+
+    // Package purchase endpoints
+    Route::post('/packages/purchase', [PackagePurchaseController::class, 'initiate'])
+        ->name('api.v1.packages.purchase');
 });
+
+// Payment gateway webhooks (no auth required - verified by signature)
+Route::post('/webhooks/payment/{provider}', [PackagePurchaseController::class, 'webhook'])
+    ->name('api.webhooks.payment');

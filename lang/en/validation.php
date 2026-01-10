@@ -161,5 +161,14 @@ return [
         'occurred_at_invalid' => 'Occurred at must be a valid date.',
     ],
 
+    'package' => [
+        'wallet_required' => 'Wallet is required.',
+        'wallet_not_found' => 'Wallet not found.',
+        'package_required' => 'Package is required.',
+        'package_not_found' => 'Package not found.',
+        'message_max' => 'Message must not exceed 1000 characters.',
+        'belongs_to_wallet' => 'The selected package does not belong to this wallet.',
+    ],
+
     'attributes' => [],
 ];
