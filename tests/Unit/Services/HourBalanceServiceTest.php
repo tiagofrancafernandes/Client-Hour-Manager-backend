@@ -25,7 +25,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_calculates_positive_balance(): void
+    public function itCalculatesPositiveBalance(): void
     {
         // Arrange
         $client = Client::factory()->create();
@@ -47,7 +47,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_calculates_negative_balance(): void
+    public function itCalculatesNegativeBalance(): void
     {
         // Arrange
         $client = Client::factory()->create();
@@ -79,7 +79,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_calculates_balance_for_period(): void
+    public function itCalculatesBalanceForPeriod(): void
     {
         // Arrange
         $client = Client::factory()->create();
@@ -112,7 +112,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_detects_debt(): void
+    public function itDetectsDebt(): void
     {
         // Arrange
         $client = Client::factory()->create();
@@ -131,7 +131,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_zero_debt_when_balance_is_positive(): void
+    public function itReturnsZeroDebtWhenBalanceIsPositive(): void
     {
         // Arrange
         $client = Client::factory()->create();
@@ -150,7 +150,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_checks_sufficient_balance(): void
+    public function itChecksSufficientBalance(): void
     {
         // Arrange
         $client = Client::factory()->create();
@@ -169,7 +169,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_formats_minutes_to_hours(): void
+    public function itFormatsMinutesToHours(): void
     {
         // Act
         $result1 = $this->service->formatMinutesToHours(125);
@@ -181,7 +181,7 @@ class HourBalanceServiceTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_transfer_transactions(): void
+    public function itHandlesTransferTransactions(): void
     {
         // Arrange
         $client = Client::factory()->create();
