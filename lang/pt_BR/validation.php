@@ -178,6 +178,16 @@ return [
         ],
     ],
 
+    'transaction' => [
+        'wallet_required' => 'A carteira é obrigatória.',
+        'wallet_not_found' => 'Carteira não encontrada.',
+        'minutes_required' => 'Os minutos são obrigatórios.',
+        'minutes_min' => 'Os minutos devem ser no mínimo 1.',
+        'description_max' => 'A descrição não pode exceder 500 caracteres.',
+        'internal_note_max' => 'A nota interna não pode exceder 1000 caracteres.',
+        'occurred_at_invalid' => 'A data de ocorrência deve ser uma data válida.',
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

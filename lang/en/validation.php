@@ -151,5 +151,15 @@ return [
         ],
     ],
 
+    'transaction' => [
+        'wallet_required' => 'Wallet is required.',
+        'wallet_not_found' => 'Wallet not found.',
+        'minutes_required' => 'Minutes is required.',
+        'minutes_min' => 'Minutes must be at least 1.',
+        'description_max' => 'Description must not exceed 500 characters.',
+        'internal_note_max' => 'Internal note must not exceed 1000 characters.',
+        'occurred_at_invalid' => 'Occurred at must be a valid date.',
+    ],
+
     'attributes' => [],
 ];
