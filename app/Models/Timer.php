@@ -102,4 +102,50 @@ class Timer extends Model
     {
         return $this->is_hidden;
     }
+
+    /**
+     * Scope to get visible timers for a specific user or client.
+     *
+     * Rules:
+     * - Admin (User with admin role) sees all timers
+     * - Creator (Client) always sees their own timers (including hidden)
+     * - Other clients see only non-hidden timers
+     */
+    public function scopeVisibleTo($query, User|Client $authenticatable)
+    {
+        // If it's a User with admin role, show all timers
+        if ($authenticatable instanceof User && $authenticatable->hasRole('admin')) {
+            return $query;
+        }
+
+        // For clients, show:
+        // 1. All non-hidden timers
+        // 2. Hidden timers created by the client themselves
+        $clientId = $authenticatable instanceof Client
+            ? $authenticatable->id
+            : null;
+
+        return $query->where(function ($q) use ($clientId) {
+            $q->where('is_hidden', false);
+            if ($clientId) {
+                $q->orWhere('created_by', $clientId);
+            }
+        });
+    }
+
+    /**
+     * Scope to get only non-hidden timers.
+     */
+    public function scopeNotHidden($query)
+    {
+        return $query->where('is_hidden', false);
+    }
+
+    /**
+     * Scope to get only hidden timers.
+     */
+    public function scopeHidden($query)
+    {
+        return $query->where('is_hidden', true);
+    }
 }
