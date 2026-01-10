@@ -48,6 +48,10 @@ return [
         'paid' => 'Fatura marcada como paga.',
         'cancelled' => 'Fatura cancelada.',
         'cannot_modify' => 'Faturas pagas não podem ser modificadas.',
+        'invalid_price' => 'O preço por hora deve ser maior que zero.',
+        'no_debt' => 'A carteira não possui débitos.',
+        'payment_description' => 'Pagamento da fatura #:invoice_id',
+        'payment_internal_note' => 'Pagamento da fatura #:invoice_id recebido',
     ],
 
     // Package messages

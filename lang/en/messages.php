@@ -48,6 +48,10 @@ return [
         'paid' => 'Invoice marked as paid.',
         'cancelled' => 'Invoice cancelled.',
         'cannot_modify' => 'Paid invoices cannot be modified.',
+        'invalid_price' => 'Price per hour must be greater than zero.',
+        'no_debt' => 'Wallet has no debt.',
+        'payment_description' => 'Payment for invoice #:invoice_id',
+        'payment_internal_note' => 'Invoice #:invoice_id payment received',
     ],
 
     // Package messages
