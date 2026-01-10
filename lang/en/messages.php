@@ -39,6 +39,7 @@ return [
         'cancelled' => 'Timer cancelled.',
         'invalid_state' => 'Invalid timer state.',
         'already_running' => 'Timer is already running.',
+        'debit_description' => 'Time tracked',
     ],
 
     // Invoice messages

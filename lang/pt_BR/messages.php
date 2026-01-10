@@ -39,6 +39,7 @@ return [
         'cancelled' => 'Timer cancelado.',
         'invalid_state' => 'Estado do timer inválido.',
         'already_running' => 'O timer já está em execução.',
+        'debit_description' => 'Tempo registrado',
     ],
 
     // Invoice messages
