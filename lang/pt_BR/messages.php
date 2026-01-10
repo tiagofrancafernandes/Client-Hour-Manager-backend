@@ -19,6 +19,7 @@ return [
         'transfer_completed' => 'Transferência concluída com sucesso.',
         'transfer_failed' => 'Falha na transferência.',
         'cannot_delete' => 'Carteiras não podem ser excluídas.',
+        'cannot_transfer_to_same' => 'Não é possível transferir para a mesma carteira.',
     ],
 
     // Transaction messages

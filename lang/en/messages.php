@@ -19,6 +19,7 @@ return [
         'transfer_completed' => 'Transfer completed successfully.',
         'transfer_failed' => 'Transfer failed.',
         'cannot_delete' => 'Wallets cannot be deleted.',
+        'cannot_transfer_to_same' => 'Cannot transfer to the same wallet.',
     ],
 
     // Transaction messages
