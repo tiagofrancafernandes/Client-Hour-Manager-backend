@@ -24,7 +24,7 @@ class WalletFactory extends Factory
             'name' => fake()->words(2, true),
             'description' => fake()->sentence(),
             'is_default' => false,
-            'is_archived' => false,
+            'archived_at' => null,
             'allow_client_purchases' => true,
         ];
     }
@@ -45,7 +45,7 @@ class WalletFactory extends Factory
     public function archived(): static
     {
         return $this->state(fn (array $attributes) => [
-            'is_archived' => true,
+            'archived_at' => now(),
         ]);
     }
 }

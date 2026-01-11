@@ -36,6 +36,7 @@ vendor
 *.md
 !*README*.md
 !*GUIDELINE*.md
+!*API_*.md
 !*DOCUMENTATION*.md
 !*QUICKSTART*.md
 *no*commit*
@@ -46,5 +47,6 @@ vendor
 *.log
 *.swp
 *.out
+*.bak
 *.zip
 _ide_helper*

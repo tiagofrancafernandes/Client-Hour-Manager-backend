@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $name
  * @property string|null $description
  * @property bool $is_default
- * @property bool $is_archived
+ * @property-read bool $is_archived
  * @property bool $allow_client_purchases
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -55,7 +55,7 @@ class Wallet extends Model
         'name',
         'description',
         'is_default',
-        'is_archived',
+        'archived_at',
         'allow_client_purchases',
     ];
 
@@ -66,9 +66,21 @@ class Wallet extends Model
      */
     protected $casts = [
         'is_default' => 'boolean',
-        'is_archived' => 'boolean',
+        'archived_at' => 'datetime',
         'allow_client_purchases' => 'boolean',
     ];
+
+    protected $appends = [
+        'is_archived',
+    ];
+
+    /**
+     * Get whether the wallet is archived.
+     */
+    public function getIsArchivedAttribute(): bool
+    {
+        return filled($this->archived_at);
+    }
 
     /**
      * Get the client that owns the wallet.
@@ -107,7 +119,7 @@ class Wallet extends Model
      */
     public function isArchived(): bool
     {
-        return $this->is_archived;
+        return $this->getIsArchivedAttribute();
     }
 
     /**

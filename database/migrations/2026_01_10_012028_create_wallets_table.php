@@ -18,7 +18,7 @@ return new class() extends Migration {
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('is_default')->default(false);
-            $table->boolean('is_archived')->default(false);
+            $table->timestamp('archived_at')->nullable()->index();
             $table->boolean('allow_client_purchases')->default(true);
             $table->timestamps();
         });
