@@ -11,6 +11,7 @@ The Client Hour Management API is a ledger-based hour tracking system that provi
 ## Quick Links
 
 - [Authentication](#authentication)
+- [Pagination](#pagination)
 - [Permissions & Roles](#permissions--roles-management)
 - [User Management](#user-management)
 - [Client Management](#client-management)
@@ -34,6 +35,162 @@ For complete authentication documentation including login, logout, and user info
 
 ---
 
+## Pagination
+
+**All list endpoints use Laravel's standard pagination.**
+
+### How It Works
+
+List endpoints (index methods) automatically paginate results using Laravel's built-in pagination:
+
+**Query Parameters:**
+- `per_page` - Items per page (default: 15, max: 100)
+- `page` - Page number (default: 1)
+
+**Example Request:**
+```http
+GET /api/v1/clients?per_page=25&page=2
+```
+
+**Example Response:**
+```json
+{
+  "data": [
+    {
+      "id": 26,
+      "name": "Client Name",
+      ...
+    }
+  ],
+  "links": {
+    "first": "http://api.test/api/v1/clients?page=1",
+    "last": "http://api.test/api/v1/clients?page=10",
+    "prev": "http://api.test/api/v1/clients?page=1",
+    "next": "http://api.test/api/v1/clients?page=3"
+  },
+  "meta": {
+    "current_page": 2,
+    "from": 26,
+    "last_page": 10,
+    "path": "http://api.test/api/v1/clients",
+    "per_page": 25,
+    "to": 50,
+    "total": 250
+  }
+}
+```
+
+### Paginated Endpoints
+
+The following endpoints support pagination:
+
+| Endpoint | Default per_page | Max per_page |
+|----------|------------------|--------------|
+| `GET /clients` | 15 | 100 |
+| `GET /users` | 15 | 100 |
+| `GET /wallets` | 15 | 100 |
+| `GET /timers` | 15 | 100 |
+| `GET /invoices` | 15 | 100 |
+
+### Non-Paginated Endpoints
+
+These endpoints return all results (cached for performance):
+
+| Endpoint | Reason | Cache TTL |
+|----------|--------|-----------|
+| `GET /permissions` | Small dataset (~100 items) | 60s |
+| `GET /roles` | Small dataset (~5-10 items) | 60s |
+
+### Pagination Metadata
+
+Each paginated response includes:
+
+**`links` object:**
+- `first` - URL to first page
+- `last` - URL to last page
+- `prev` - URL to previous page (null if on first page)
+- `next` - URL to next page (null if on last page)
+
+**`meta` object:**
+- `current_page` - Current page number
+- `from` - Starting item index
+- `last_page` - Total number of pages
+- `path` - Base URL for pagination
+- `per_page` - Items per page
+- `to` - Ending item index
+- `total` - Total number of items
+
+### Frontend Usage
+
+**TypeScript Example:**
+```typescript
+interface PaginatedResponse<T> {
+  data: T[];
+  links: {
+    first: string;
+    last: string;
+    prev: string | null;
+    next: string | null;
+  };
+  meta: {
+    current_page: number;
+    from: number;
+    last_page: number;
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+  };
+}
+
+// Fetch paginated clients
+async function fetchClients(page = 1, perPage = 15) {
+  const response = await api.get<PaginatedResponse<Client>>(
+    `/clients?page=${page}&per_page=${perPage}`
+  );
+
+  return {
+    items: response.data.data,
+    pagination: response.data.meta,
+    links: response.data.links,
+  };
+}
+
+// React example with pagination
+function ClientList() {
+  const [page, setPage] = useState(1);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [meta, setMeta] = useState<PaginationMeta>();
+
+  useEffect(() => {
+    fetchClients(page, 25).then(({ items, pagination }) => {
+      setClients(items);
+      setMeta(pagination);
+    });
+  }, [page]);
+
+  return (
+    <div>
+      <ClientTable data={clients} />
+      <Pagination
+        currentPage={meta?.current_page}
+        totalPages={meta?.last_page}
+        onPageChange={setPage}
+      />
+    </div>
+  );
+}
+```
+
+**Best Practices:**
+1. ✅ Always specify `per_page` to avoid inconsistent page sizes
+2. ✅ Respect the max limit (100 items per page)
+3. ✅ Use `meta.total` to show total count to users
+4. ✅ Check `links.next` to determine if there are more pages
+5. ✅ Cache results on frontend to avoid redundant requests
+
+---
+
 # User, Role & Permission Management API
 
 **Endpoints for managing users, roles and permissions**
@@ -50,6 +207,8 @@ This document extends the main API guidelines with detailed information about us
 
 **Auth Required:** ✅ Yes
 **Permission Required:** `permission.view_any`
+
+**Pagination:** ❌ No (returns all ~100 permissions, cached for performance)
 
 **Response (200):**
 ```json
@@ -102,6 +261,8 @@ const walletPermissions = permissions.wallet;
 
 **Auth Required:** ✅ Yes
 **Permission Required:** `role.view_any`
+
+**Pagination:** ❌ No (returns all ~5-10 roles, cached for performance)
 
 **Response (200):**
 ```json
@@ -297,12 +458,15 @@ const walletPermissions = permissions.wallet;
 **Auth Required:** ✅ Yes
 **Permission Required:** `user.view_any`
 
+**Pagination:** ✅ Yes (default: 15 per page, max: 100) - See [Pagination](#pagination) section
+
 **Query Parameters:**
 - `client_id` - Filter by client
 - `role` - Filter by role name
 - `active` - Filter by active status (boolean)
 - `search` - Search by name or email
-- `per_page` - Items per page (max 100)
+- `per_page` - Items per page (max 100, default 15)
+- `page` - Page number (default 1)
 
 **Response (200):**
 ```json
@@ -928,10 +1092,13 @@ List all clients.
 **Authentication:** Required
 **Permission:** `client.view_any`
 
+**Pagination:** ✅ Yes (default: 15 per page, max: 100) - See [Pagination](#pagination) section
+
 **Query Parameters:**
 - `status` - Filter by status (active/inactive)
 - `search` - Search by name or email
 - `per_page` - Items per page (max 100, default 15)
+- `page` - Page number (default 1)
 
 **Success Response (200):**
 ```json
@@ -1082,10 +1249,13 @@ List all wallets.
 **Authentication:** Required
 **Permission:** `wallet.view_any` or `wallet.view_own`
 
+**Pagination:** ✅ Yes (default: 15 per page, max: 100) - See [Pagination](#pagination) section
+
 **Query Parameters:**
 - `client_id` - Filter by client
 - `include_archived` - Include archived wallets (boolean)
 - `per_page` - Items per page (max 100, default 15)
+- `page` - Page number (default 1)
 
 **Success Response (200):**
 ```json
@@ -1354,10 +1524,13 @@ List timers.
 **Authentication:** Required
 **Permission:** `timer.view_any` or `timer.view_own`
 
+**Pagination:** ✅ Yes (default: 15 per page, max: 100) - See [Pagination](#pagination) section
+
 **Query Parameters:**
 - `wallet_id` - Filter by wallet
 - `status` - Filter by status (running, paused, stopped, cancelled)
 - `per_page` - Items per page (max 100, default 15)
+- `page` - Page number (default 1)
 
 **Success Response (200):**
 ```json
@@ -1373,7 +1546,9 @@ List timers.
       "total_minutes": 120,
       "created_at": "2024-01-10T09:00:00.000000Z"
     }
-  ]
+  ],
+  "links": {...},
+  "meta": {...}
 }
 ```
 
@@ -1502,10 +1677,32 @@ List invoices.
 **Authentication:** Required
 **Permission:** `invoice.view_any` or `invoice.view_own`
 
+**Pagination:** ✅ Yes (default: 15 per page, max: 100) - See [Pagination](#pagination) section
+
 **Query Parameters:**
 - `client_id` - Filter by client
 - `status` - Filter by status (open, paid, cancelled)
 - `per_page` - Items per page (max 100, default 15)
+- `page` - Page number (default 1)
+
+**Success Response (200):**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "client_id": 1,
+      "hours": 10.5,
+      "price_per_hour": 50.00,
+      "total_amount": 525.00,
+      "status": "open",
+      "paid_at": null,
+      "created_at": "2024-01-10T10:00:00.000000Z"
+    }
+  ],
+  "links": {...},
+  "meta": {...}
+}
 
 ---
 

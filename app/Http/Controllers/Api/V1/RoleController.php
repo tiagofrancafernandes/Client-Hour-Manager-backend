@@ -21,21 +21,17 @@ class RoleController extends Controller
     {
         $this->authorize('viewAny', Role::class);
 
-        $roles = Cache::remember('api.roles.list', 60, function () {
-            return Role::with('permissions:id,name')
+        $roles = Cache::remember('api.roles.list', 60, fn () => Role::with('permissions:id,name')
                 ->orderBy('name')
                 ->get()
-                ->map(function ($role) {
-                    return [
-                        'id' => $role->id,
-                        'name' => $role->name,
-                        'guard_name' => $role->guard_name,
-                        'permissions' => $role->permissions->pluck('name')->sort()->values(),
-                        'permissions_count' => $role->permissions->count(),
-                        'created_at' => $role->created_at?->toISOString(),
-                    ];
-                });
-        });
+                ->map(fn ($role) => [
+                    'id' => $role->id,
+                    'name' => $role->name,
+                    'guard_name' => $role->guard_name,
+                    'permissions' => $role->permissions->pluck('name')->sort()->values(),
+                    'permissions_count' => $role->permissions->count(),
+                    'created_at' => $role->created_at?->toISOString(),
+                ]));
 
         return response()->json([
             'data' => $roles,

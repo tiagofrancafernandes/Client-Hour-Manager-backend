@@ -28,16 +28,12 @@ class PermissionController extends Controller
                     // Group by resource (e.g., 'client' from 'client.view_any')
                     return explode('.', $permission->name)[0];
                 })
-                ->map(function ($group) {
-                    return $group->map(function ($permission) {
-                        return [
-                            'id' => $permission->id,
-                            'name' => $permission->name,
-                            'guard_name' => $permission->guard_name,
-                            'created_at' => $permission->created_at?->toISOString(),
-                        ];
-                    })->values();
-                });
+                ->map(fn ($group) => $group->map(fn ($permission) => [
+                    'id' => $permission->id,
+                    'name' => $permission->name,
+                    'guard_name' => $permission->guard_name,
+                    'created_at' => $permission->created_at?->toISOString(),
+                ])->values());
         });
 
         return response()->json([

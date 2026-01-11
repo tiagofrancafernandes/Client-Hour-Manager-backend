@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereIsDefault($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereUpdatedAt($value)
+ * @property \Illuminate\Support\Carbon|null $archived_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereArchivedAt($value)
  * @mixin \Eloquent
  */
 class Wallet extends Model

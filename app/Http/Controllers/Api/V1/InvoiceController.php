@@ -18,7 +18,8 @@ class InvoiceController extends Controller
 {
     public function __construct(
         private readonly InvoiceService $invoiceService
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): AnonymousResourceCollection
     {

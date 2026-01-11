@@ -17,7 +17,8 @@ class ClientController extends Controller
 {
     public function __construct(
         private readonly ClientService $clientService
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): AnonymousResourceCollection
     {

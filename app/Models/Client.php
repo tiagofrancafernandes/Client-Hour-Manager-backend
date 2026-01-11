@@ -43,6 +43,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|Client whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Client withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Client withoutTrashed()
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $users
+ * @property-read int|null $users_count
  * @mixin \Eloquent
  */
 class Client extends Authenticatable

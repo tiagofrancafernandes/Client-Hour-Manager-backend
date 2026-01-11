@@ -19,7 +19,8 @@ class WalletController extends Controller
     public function __construct(
         private readonly WalletService $walletService,
         private readonly HourBalanceService $balanceService
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): AnonymousResourceCollection
     {

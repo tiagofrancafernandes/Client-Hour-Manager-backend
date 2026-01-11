@@ -17,7 +17,8 @@ class TimerController extends Controller
 {
     public function __construct(
         private readonly TimerService $timerService
-    ) {}
+    ) {
+    }
 
     public function index(Request $request): AnonymousResourceCollection
     {
