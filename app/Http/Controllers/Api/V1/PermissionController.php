@@ -13,7 +13,7 @@ class PermissionController extends Controller
 {
     /**
      * List all permissions.
-     * 
+     *
      * This endpoint is cached for 60 seconds to avoid database overhead.
      */
     public function index(): JsonResponse
@@ -50,4 +50,3 @@ class PermissionController extends Controller
         ]);
     }
 }
-

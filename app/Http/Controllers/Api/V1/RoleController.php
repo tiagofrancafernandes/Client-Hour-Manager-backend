@@ -14,7 +14,7 @@ class RoleController extends Controller
 {
     /**
      * List all roles with their permissions.
-     * 
+     *
      * This endpoint is cached for 60 seconds to avoid database overhead.
      */
     public function index(): JsonResponse
@@ -170,4 +170,3 @@ class RoleController extends Controller
         ]);
     }
 }
-
