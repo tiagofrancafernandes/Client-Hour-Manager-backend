@@ -34,20 +34,137 @@ Authorization: Bearer {your-token}
    - Cannot see internal notes
    - Cannot manually create transactions
 
-### Obtaining a Token
+---
 
-```bash
-# Login endpoint (example - implement as needed)
-POST /api/v1/auth/login
-Content-Type: application/json
+## Authentication Endpoints
 
+### Login
+
+Authenticate a user and receive an access token.
+
+**Endpoint:** `POST /api/v1/auth/login`
+
+**Authentication:** None (public endpoint)
+
+**Request Body:**
+
+```json
 {
   "email": "user@example.com",
-  "password": "password"
+  "password": "your-password"
 }
+```
 
-# Response
+**Validation:**
+- `email`: required, valid email format
+- `password`: required, string
+
+**Success Response (200):**
+
+```json
 {
+  "token": "1|aB3dEf7gH9iJ0kL2mN4oP6qR8sT0uV2wX4yZ6",
+  "user": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "user@example.com",
+    "active": true,
+    "email_verified_at": "2024-01-01T00:00:00.000000Z",
+    "roles": ["admin"],
+    "permissions": ["manage wallets", "view transactions"],
+    "created_at": "2024-01-01T00:00:00.000000Z"
+  }
+}
+```
+
+**Error Responses:**
+
+- **401 Unauthorized** - Invalid credentials
+  ```json
+  {
+    "message": "These credentials do not match our records."
+  }
+  ```
+
+- **403 Forbidden** - Inactive account
+  ```json
+  {
+    "message": "Your account is inactive. Please contact support."
+  }
+  ```
+
+- **422 Unprocessable Entity** - Validation errors
+  ```json
+  {
+    "message": "The email field is required.",
+    "errors": {
+      "email": ["The email field is required."]
+    }
+  }
+  ```
+
+---
+
+### Get User Info
+
+Retrieve authenticated user information including roles and permissions.
+
+**Endpoint:** `GET /api/v1/auth/info`
+
+**Authentication:** Required (Bearer token)
+
+**Success Response (200):**
+
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "user@example.com",
+    "active": true,
+    "email_verified_at": "2024-01-01T00:00:00.000000Z",
+    "roles": ["admin"],
+    "permissions": ["manage wallets", "view transactions"],
+    "created_at": "2024-01-01T00:00:00.000000Z"
+  }
+}
+```
+
+**Error Response (401):**
+
+```json
+{
+  "message": "Unauthenticated."
+}
+```
+
+---
+
+### Logout
+
+Revoke the current access token.
+
+**Endpoint:** `POST /api/v1/auth/logout`
+
+**Authentication:** Required (Bearer token)
+
+**Success Response (200):**
+
+```json
+{
+  "message": "Successfully logged out."
+}
+```
+
+**Error Response (401):**
+
+```json
+{
+  "message": "Unauthenticated."
+}
+```
+
+---
   "token": "1|abc123...",
   "user": {...}
 }

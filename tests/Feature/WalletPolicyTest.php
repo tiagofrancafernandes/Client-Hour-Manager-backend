@@ -27,7 +27,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test admin can view any wallet.
      */
-    public function test_admin_can_view_any_wallet(): void
+    public function testAdminCanViewAnyWallet(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -41,7 +41,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test client can view own wallet.
      */
-    public function test_client_can_view_own_wallet(): void
+    public function testClientCanViewOwnWallet(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -52,7 +52,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test client cannot view other client's wallet.
      */
-    public function test_client_cannot_view_other_clients_wallet(): void
+    public function testClientCannotViewOtherClientsWallet(): void
     {
         $client1 = Client::factory()->create();
         $client2 = Client::factory()->create();
@@ -65,7 +65,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test only admin can create wallets.
      */
-    public function test_only_admin_can_create_wallets(): void
+    public function testOnlyAdminCanCreateWallets(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -79,7 +79,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test admin can update wallet.
      */
-    public function test_admin_can_update_wallet(): void
+    public function testAdminCanUpdateWallet(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -93,7 +93,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test client cannot update wallet.
      */
-    public function test_client_cannot_update_wallet(): void
+    public function testClientCannotUpdateWallet(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -104,7 +104,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test wallets cannot be deleted.
      */
-    public function test_wallets_cannot_be_deleted(): void
+    public function testWalletsCannotBeDeleted(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -119,7 +119,7 @@ class WalletPolicyTest extends TestCase
     /**
      * Test wallets cannot be force deleted.
      */
-    public function test_wallets_cannot_be_force_deleted(): void
+    public function testWalletsCannotBeForceDeleted(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');

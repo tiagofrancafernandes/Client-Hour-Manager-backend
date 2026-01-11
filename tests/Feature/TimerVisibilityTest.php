@@ -28,7 +28,7 @@ class TimerVisibilityTest extends TestCase
     /**
      * Test admin sees all timers.
      */
-    public function test_admin_sees_all_timers(): void
+    public function testAdminSeesAllTimers(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -73,7 +73,7 @@ class TimerVisibilityTest extends TestCase
     /**
      * Test creator sees their own hidden timers.
      */
-    public function test_creator_sees_own_hidden_timers(): void
+    public function testCreatorSeesOwnHiddenTimers(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -100,7 +100,7 @@ class TimerVisibilityTest extends TestCase
     /**
      * Test client does not see hidden timers from other clients.
      */
-    public function test_client_does_not_see_others_hidden_timers(): void
+    public function testClientDoesNotSeeOthersHiddenTimers(): void
     {
         $client1 = Client::factory()->create();
         $client2 = Client::factory()->create();
@@ -156,7 +156,7 @@ class TimerVisibilityTest extends TestCase
     /**
      * Test client sees only non-hidden timers from others.
      */
-    public function test_client_sees_only_non_hidden_timers_except_own(): void
+    public function testClientSeesOnlyNonHiddenTimersExceptOwn(): void
     {
         $client1 = Client::factory()->create();
         $client2 = Client::factory()->create();
@@ -187,7 +187,7 @@ class TimerVisibilityTest extends TestCase
     /**
      * Test notHidden scope returns only non-hidden timers.
      */
-    public function test_not_hidden_scope(): void
+    public function testNotHiddenScope(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -213,7 +213,7 @@ class TimerVisibilityTest extends TestCase
     /**
      * Test hidden scope returns only hidden timers.
      */
-    public function test_hidden_scope(): void
+    public function testHiddenScope(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);

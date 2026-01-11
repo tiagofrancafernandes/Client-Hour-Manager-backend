@@ -28,7 +28,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test successful purchase initiation.
      */
-    public function test_can_initiate_package_purchase(): void
+    public function testCanInitiatePackagePurchase(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);
@@ -73,7 +73,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test purchase fails when wallet disables purchases.
      */
-    public function test_purchase_fails_when_wallet_disables_purchases(): void
+    public function testPurchaseFailsWhenWalletDisablesPurchases(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);
@@ -102,7 +102,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test purchase fails when package is inactive.
      */
-    public function test_purchase_fails_when_package_is_inactive(): void
+    public function testPurchaseFailsWhenPackageIsInactive(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);
@@ -131,7 +131,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test purchase fails when package doesn't belong to wallet.
      */
-    public function test_purchase_fails_when_package_not_belong_to_wallet(): void
+    public function testPurchaseFailsWhenPackageNotBelongToWallet(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);
@@ -165,7 +165,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test purchase requires authentication.
      */
-    public function test_purchase_requires_authentication(): void
+    public function testPurchaseRequiresAuthentication(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -186,7 +186,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test purchase with optional message.
      */
-    public function test_purchase_persists_optional_message(): void
+    public function testPurchasePersistsOptionalMessage(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);
@@ -218,7 +218,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test validation error for missing wallet_id.
      */
-    public function test_validation_fails_when_wallet_id_missing(): void
+    public function testValidationFailsWhenWalletIdMissing(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);
@@ -234,7 +234,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test validation error for missing package_id.
      */
-    public function test_validation_fails_when_package_id_missing(): void
+    public function testValidationFailsWhenPackageIdMissing(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);
@@ -250,7 +250,7 @@ class PackagePurchaseTest extends TestCase
     /**
      * Test validation error when message exceeds max length.
      */
-    public function test_validation_fails_when_message_too_long(): void
+    public function testValidationFailsWhenMessageTooLong(): void
     {
         $client = Client::factory()->create();
         Sanctum::actingAs($client);

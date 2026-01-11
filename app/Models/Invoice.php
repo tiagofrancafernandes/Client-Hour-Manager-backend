@@ -8,6 +8,34 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $wallet_id
+ * @property string $status
+ * @property int $minutes
+ * @property string $price_per_hour
+ * @property string $total_amount
+ * @property string|null $client_message
+ * @property \Illuminate\Support\Carbon|null $paid_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Wallet $wallet
+ * @method static \Database\Factories\InvoiceFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereClientMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereMinutes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice wherePaidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice wherePricePerHour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereTotalAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereWalletId($value)
+ * @mixin \Eloquent
+ */
 class Invoice extends Model
 {
     use HasFactory;

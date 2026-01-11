@@ -8,6 +8,32 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $wallet_id
+ * @property string $type
+ * @property int $minutes
+ * @property string|null $description
+ * @property string|null $internal_note
+ * @property \Illuminate\Support\Carbon $occurred_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Wallet $wallet
+ * @method static \Database\Factories\HourTransactionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction query()
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereInternalNote($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereMinutes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereOccurredAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HourTransaction whereWalletId($value)
+ * @mixin \Eloquent
+ */
 class HourTransaction extends Model
 {
     use HasFactory;

@@ -4,89 +4,85 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Models\Client;
 use App\Models\User;
 use App\Models\Wallet;
 
 class WalletPolicy
 {
     /**
-     * Determine whether the authenticatable can view any wallets.
+     * Determine whether the user can view any wallets.
      */
-    public function viewAny(User|Client $authenticatable): bool
+    public function viewAny(User $user): bool
     {
-        // Admin can see all wallets
-        if ($authenticatable instanceof User && $authenticatable->hasRole('admin')) {
-            return true;
-        }
-
-        // Clients can see wallets (filtered by their own in the query)
-        return $authenticatable instanceof Client;
+        return $user->hasAnyPermission(['wallet.view_any', 'wallet.view_own']);
     }
 
     /**
-     * Determine whether the authenticatable can view the wallet.
+     * Determine whether the user can view the wallet.
      */
-    public function view(User|Client $authenticatable, Wallet $wallet): bool
+    public function view(User $user, Wallet $wallet): bool
     {
-        // Admin can see all wallets
-        if ($authenticatable instanceof User && $authenticatable->hasRole('admin')) {
+        // Can view any wallet
+        if ($user->hasPermissionTo('wallet.view_any')) {
             return true;
         }
 
-        // Client can only see their own wallets
-        if ($authenticatable instanceof Client) {
-            return $wallet->client_id === $authenticatable->id;
+        // Can view own wallets
+        if ($user->hasPermissionTo('wallet.view_own')) {
+            return $user->client_id === $wallet->client_id;
         }
 
         return false;
     }
 
     /**
-     * Determine whether the authenticatable can create wallets.
+     * Determine whether the user can create wallets.
      */
-    public function create(User|Client $authenticatable): bool
+    public function create(User $user): bool
     {
-        // Only admin can create wallets
-        return $authenticatable instanceof User && $authenticatable->hasRole('admin');
+        return $user->hasPermissionTo('wallet.create');
     }
 
     /**
-     * Determine whether the authenticatable can update the wallet.
+     * Determine whether the user can update the wallet.
      */
-    public function update(User|Client $authenticatable, Wallet $wallet): bool
+    public function update(User $user, Wallet $wallet): bool
     {
-        // Admin can update any wallet
-        if ($authenticatable instanceof User && $authenticatable->hasRole('admin')) {
+        // Can update any wallet
+        if ($user->hasPermissionTo('wallet.update_any')) {
             return true;
         }
 
-        // Client cannot update wallets (business rule)
+        // Can update own wallets
+        if ($user->hasPermissionTo('wallet.update_own')) {
+            return $user->client_id === $wallet->client_id;
+        }
+
         return false;
     }
 
     /**
-     * Determine whether the authenticatable can delete the wallet.
+     * Determine whether the user can delete the wallet.
      */
-    public function delete(User|Client $authenticatable, Wallet $wallet): bool
+    public function delete(User $user, Wallet $wallet): bool
     {
         // Wallets cannot be deleted (business rule)
-        return false;
+        // Only admins with explicit permission
+        return $user->hasPermissionTo('wallet.delete_any');
     }
 
     /**
-     * Determine whether the authenticatable can restore the wallet.
+     * Determine whether the user can restore the wallet.
      */
-    public function restore(User|Client $authenticatable, Wallet $wallet): bool
+    public function restore(User $user, Wallet $wallet): bool
     {
-        // Only admin can restore wallets
-        return $authenticatable instanceof User && $authenticatable->hasRole('admin');
+        return $user->hasPermissionTo('wallet.manage');
     }
 
     /**
-     * Determine whether the authenticatable can permanently delete the wallet.
+     * Determine whether the user can permanently delete the wallet.
      */
-    public function forceDelete(User|Client $authenticatable, Wallet $wallet): bool
+    public function forceDelete(User $user, Wallet $wallet): bool
     {
         // Wallets cannot be force deleted (business rule)
         return false;

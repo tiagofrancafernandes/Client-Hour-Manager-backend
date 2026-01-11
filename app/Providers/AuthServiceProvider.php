@@ -2,7 +2,20 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\Client;
+use App\Models\HourTransaction;
+use App\Models\Invoice;
+use App\Models\Timer;
+use App\Models\User;
+use App\Models\Wallet;
+use App\Policies\ClientPolicy;
+use App\Policies\HourTransactionPolicy;
+use App\Policies\InvoicePolicy;
+use App\Policies\PermissionPolicy;
+use App\Policies\RolePolicy;
+use App\Policies\TimerPolicy;
+use App\Policies\UserPolicy;
+use App\Policies\WalletPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +26,14 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        Client::class => ClientPolicy::class,
+        Wallet::class => WalletPolicy::class,
+        Timer::class => TimerPolicy::class,
+        Invoice::class => InvoicePolicy::class,
+        HourTransaction::class => HourTransactionPolicy::class,
+        User::class => UserPolicy::class,
+        \Spatie\Permission\Models\Role::class => RolePolicy::class,
+        \Spatie\Permission\Models\Permission::class => PermissionPolicy::class,
     ];
 
     /**

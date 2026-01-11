@@ -8,6 +8,42 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $wallet_id
+ * @property int|null $created_by
+ * @property string $state
+ * @property string|null $description
+ * @property bool $is_hidden
+ * @property \Illuminate\Support\Carbon $started_at
+ * @property \Illuminate\Support\Carbon|null $paused_at
+ * @property \Illuminate\Support\Carbon|null $ended_at
+ * @property int $total_minutes
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Client|null $creator
+ * @property-read Wallet $wallet
+ * @method static \Database\Factories\TimerFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer hidden()
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer notHidden()
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer visibleTo(\App\Models\User|\App\Models\Client $authenticatable)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereEndedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereIsHidden($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer wherePausedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereStartedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereState($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereTotalMinutes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Timer whereWalletId($value)
+ * @mixin \Eloquent
+ */
 class Timer extends Model
 {
     use HasFactory;
@@ -127,6 +163,7 @@ class Timer extends Model
 
         return $query->where(function ($q) use ($clientId) {
             $q->where('is_hidden', false);
+
             if ($clientId) {
                 $q->orWhere('created_by', $clientId);
             }

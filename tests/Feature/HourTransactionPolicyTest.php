@@ -28,7 +28,7 @@ class HourTransactionPolicyTest extends TestCase
     /**
      * Test admin can view any transaction.
      */
-    public function test_admin_can_view_any_transaction(): void
+    public function testAdminCanViewAnyTransaction(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -48,7 +48,7 @@ class HourTransactionPolicyTest extends TestCase
     /**
      * Test client can view own wallet's transactions.
      */
-    public function test_client_can_view_own_wallets_transactions(): void
+    public function testClientCanViewOwnWalletsTransactions(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -65,7 +65,7 @@ class HourTransactionPolicyTest extends TestCase
     /**
      * Test client cannot view other client's transactions.
      */
-    public function test_client_cannot_view_other_clients_transactions(): void
+    public function testClientCannotViewOtherClientsTransactions(): void
     {
         $client1 = Client::factory()->create();
         $client2 = Client::factory()->create();
@@ -84,7 +84,7 @@ class HourTransactionPolicyTest extends TestCase
     /**
      * Test only admin can create transactions.
      */
-    public function test_only_admin_can_create_transactions(): void
+    public function testOnlyAdminCanCreateTransactions(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -98,7 +98,7 @@ class HourTransactionPolicyTest extends TestCase
     /**
      * Test transactions cannot be updated.
      */
-    public function test_transactions_cannot_be_updated(): void
+    public function testTransactionsCannotBeUpdated(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -119,7 +119,7 @@ class HourTransactionPolicyTest extends TestCase
     /**
      * Test transactions cannot be deleted.
      */
-    public function test_transactions_cannot_be_deleted(): void
+    public function testTransactionsCannotBeDeleted(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');
@@ -140,7 +140,7 @@ class HourTransactionPolicyTest extends TestCase
     /**
      * Test only admin can view internal notes.
      */
-    public function test_only_admin_can_view_internal_notes(): void
+    public function testOnlyAdminCanViewInternalNotes(): void
     {
         $admin = User::factory()->create();
         $admin->assignRole('admin');

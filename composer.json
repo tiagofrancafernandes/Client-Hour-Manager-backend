@@ -13,6 +13,7 @@
         "spatie/laravel-permission": "^6.24"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "*",
         "dedoc/scramble": "^0.13.10",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",

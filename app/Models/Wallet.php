@@ -9,6 +9,38 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property int $client_id
+ * @property string $name
+ * @property string|null $description
+ * @property bool $is_default
+ * @property bool $is_archived
+ * @property bool $allow_client_purchases
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Client $client
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, WalletPackage> $packages
+ * @property-read int|null $packages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Timer> $timers
+ * @property-read int|null $timers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, HourTransaction> $transactions
+ * @property-read int|null $transactions_count
+ * @method static \Database\Factories\WalletFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereAllowClientPurchases($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereClientId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereIsArchived($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereIsDefault($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Wallet whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Wallet extends Model
 {
     use HasFactory;

@@ -32,3 +32,19 @@ vendor
 
 # Vercel
 .vercel
+
+*.md
+!*README*.md
+!*GUIDELINE*.md
+!*DOCUMENTATION*.md
+!*QUICKSTART*.md
+*no*commit*
+*No*Commit*
+*NO*COMMIT*
+*.bkp.*
+*.bkp
+*.log
+*.swp
+*.out
+*.zip
+_ide_helper*

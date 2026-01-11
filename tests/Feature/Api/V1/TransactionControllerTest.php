@@ -18,7 +18,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test adding credit to wallet via API.
      */
-    public function test_can_add_credit_via_api(): void
+    public function testCanAddCreditViaApi(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -59,7 +59,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test adding debit to wallet via API.
      */
-    public function test_can_add_debit_via_api(): void
+    public function testCanAddDebitViaApi(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -98,7 +98,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test validation error when wallet_id is missing.
      */
-    public function test_validation_fails_when_wallet_id_missing(): void
+    public function testValidationFailsWhenWalletIdMissing(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -114,7 +114,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test validation error when minutes is missing.
      */
-    public function test_validation_fails_when_minutes_missing(): void
+    public function testValidationFailsWhenMinutesMissing(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -133,7 +133,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test validation error when minutes is zero.
      */
-    public function test_validation_fails_when_minutes_is_zero(): void
+    public function testValidationFailsWhenMinutesIsZero(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -153,7 +153,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test validation error when wallet does not exist.
      */
-    public function test_validation_fails_when_wallet_not_found(): void
+    public function testValidationFailsWhenWalletNotFound(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -170,7 +170,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test unauthorized access without authentication.
      */
-    public function test_unauthorized_without_authentication(): void
+    public function testUnauthorizedWithoutAuthentication(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -186,7 +186,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test adding credit with optional occurred_at.
      */
-    public function test_can_add_credit_with_occurred_at(): void
+    public function testCanAddCreditWithOccurredAt(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -215,7 +215,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test description max length validation.
      */
-    public function test_validation_fails_when_description_too_long(): void
+    public function testValidationFailsWhenDescriptionTooLong(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);
@@ -236,7 +236,7 @@ class TransactionControllerTest extends TestCase
     /**
      * Test internal note max length validation.
      */
-    public function test_validation_fails_when_internal_note_too_long(): void
+    public function testValidationFailsWhenInternalNoteTooLong(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user);

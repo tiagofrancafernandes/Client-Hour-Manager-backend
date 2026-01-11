@@ -17,7 +17,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test creating a wallet package.
      */
-    public function test_can_create_wallet_package(): void
+    public function testCanCreateWalletPackage(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -41,7 +41,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test wallet package belongs to wallet.
      */
-    public function test_wallet_package_belongs_to_wallet(): void
+    public function testWalletPackageBelongsToWallet(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -59,7 +59,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test wallet has many packages.
      */
-    public function test_wallet_has_many_packages(): void
+    public function testWalletHasManyPackages(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -82,7 +82,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test active scope filters only active packages.
      */
-    public function test_active_scope_returns_only_active_packages(): void
+    public function testActiveScopeReturnsOnlyActivePackages(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -110,7 +110,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test inactive packages are not returned by active scope.
      */
-    public function test_inactive_packages_not_returned_by_active_scope(): void
+    public function testInactivePackagesNotReturnedByActiveScope(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -130,7 +130,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test package is active by default.
      */
-    public function test_package_is_active_by_default(): void
+    public function testPackageIsActiveByDefault(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -147,7 +147,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test package cascade deletes when wallet is deleted.
      */
-    public function test_package_cascade_deletes_when_wallet_deleted(): void
+    public function testPackageCascadeDeletesWhenWalletDeleted(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -168,7 +168,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test package price is stored as decimal.
      */
-    public function test_package_price_is_decimal(): void
+    public function testPackagePriceIsDecimal(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
@@ -185,7 +185,7 @@ class WalletPackageTest extends TestCase
     /**
      * Test package minutes is integer.
      */
-    public function test_package_minutes_is_integer(): void
+    public function testPackageMinutesIsInteger(): void
     {
         $client = Client::factory()->create();
         $wallet = Wallet::factory()->create(['client_id' => $client->id]);
